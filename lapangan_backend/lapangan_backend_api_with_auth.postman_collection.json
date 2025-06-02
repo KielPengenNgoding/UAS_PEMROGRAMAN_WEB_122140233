@@ -1,0 +1,600 @@
+{
+  "info": {
+    "name": "Lapangan Backend API",
+    "description": "API untuk sistem manajemen lapangan olahraga",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Authentication",
+      "description": "Endpoint untuk autentikasi",
+      "item": [
+        {
+          "name": "Login as Admin",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "// Simpan token ke variabel",
+                  "var token = pm.response.headers.get('Authorization');",
+                  "if (token) {",
+                  "    pm.environment.set('adminToken', token);",
+                  "    console.log('Token Admin tersimpan: ' + token);",
+                  "    // Tampilkan token di Test Results",
+                  "    pm.test(\"Token untuk copy-paste: \" + token, function() {",
+                  "        pm.expect(true).to.be.true;",
+                  "    });",
+                  "} else {",
+                  "    console.log('Token tidak ditemukan dalam response');",
+                  "}",
+                  "",
+                  "// Simpan user info",
+                  "var jsonData = pm.response.json();",
+                  "if (jsonData && jsonData.user) {",
+                  "    pm.environment.set('adminId', jsonData.user.id);",
+                  "    pm.environment.set('adminEmail', jsonData.user.email);",
+                  "    pm.environment.set('adminRole', jsonData.user.role);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@example.com\",\n  \"password\": \"admin_password\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:6543/auth/login",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "6543",
+              "path": ["auth", "login"]
+            },
+            "description": "Login sebagai admin"
+          },
+          "response": []
+        },
+        {
+          "name": "Login as User",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "// Simpan token ke variabel",
+                  "var token = pm.response.headers.get('Authorization');",
+                  "if (token) {",
+                  "    pm.environment.set('userToken', token);",
+                  "    console.log('Token User tersimpan: ' + token);",
+                  "    // Tampilkan token di Test Results",
+                  "    pm.test(\"Token untuk copy-paste: \" + token, function() {",
+                  "        pm.expect(true).to.be.true;",
+                  "    });",
+                  "} else {",
+                  "    console.log('Token tidak ditemukan dalam response');",
+                  "}",
+                  "",
+                  "// Simpan user info",
+                  "var jsonData = pm.response.json();",
+                  "if (jsonData && jsonData.user) {",
+                  "    pm.environment.set('userId', jsonData.user.id);",
+                  "    pm.environment.set('userEmail', jsonData.user.email);",
+                  "    pm.environment.set('userRole', jsonData.user.role);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"user_password\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:6543/auth/login",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "6543",
+              "path": ["auth", "login"]
+            },
+            "description": "Login sebagai user biasa"
+          },
+          "response": []
+        },
+        {
+          "name": "Register User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"full_name\": \"New User\",\n  \"email\": \"newuser@example.com\",\n  \"password\": \"user_password\",\n  \"role\": \"user\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:6543/auth/register",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "6543",
+              "path": ["auth", "register"]
+            },
+            "description": "Mendaftarkan user baru"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Admin",
+      "description": "Endpoint khusus untuk admin",
+      "item": [
+        {
+          "name": "Courts",
+          "description": "Endpoint admin untuk manajemen court",
+          "item": [
+            {
+              "name": "Get All Courts",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      "// Gunakan token admin jika tersedia",
+                      "var adminToken = pm.environment.get('adminToken');",
+                      "if (adminToken) {",
+                      "    pm.request.headers.add({",
+                      "        key: 'Authorization',",
+                      "        value: adminToken",
+                      "    });",
+                      "}",
+                      "console.log('Using token: ' + adminToken);",
+                      ""
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:6543/admin/courts",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "6543",
+                  "path": ["admin", "courts"]
+                },
+                "description": "Mendapatkan semua court (hanya admin)"
+              },
+              "response": []
+            },
+            {
+              "name": "Create Court",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      "// Gunakan token admin jika tersedia",
+                      "var adminToken = pm.environment.get('adminToken');",
+                      "if (adminToken) {",
+                      "    pm.request.headers.add({",
+                      "        key: 'Authorization',",
+                      "        value: adminToken",
+                      "    });",
+                      "}",
+                      "console.log('Using token: ' + adminToken);",
+                      ""
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"court_name\": \"Lapangan Basket A\",\n  \"court_category\": \"basket\",\n  \"description\": \"Lapangan basket indoor dengan fasilitas lengkap\",\n  \"status\": \"available\"\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:6543/admin/courts",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "6543",
+                  "path": ["admin", "courts"]
+                },
+                "description": "Membuat court baru (hanya admin)"
+              },
+              "response": []
+            },
+            {
+              "name": "Get Court Detail",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      "// Gunakan token admin jika tersedia",
+                      "var adminToken = pm.environment.get('adminToken');",
+                      "if (adminToken) {",
+                      "    pm.request.headers.add({",
+                      "        key: 'Authorization',",
+                      "        value: adminToken",
+                      "    });",
+                      "}",
+                      "console.log('Using token: ' + adminToken);",
+                      ""
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:6543/admin/courts/1",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "6543",
+                  "path": ["admin", "courts", "1"]
+                },
+                "description": "Mendapatkan detail court berdasarkan ID (hanya admin)"
+              },
+              "response": []
+            },
+            {
+              "name": "Update Court",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      "// Gunakan token admin jika tersedia",
+                      "var adminToken = pm.environment.get('adminToken');",
+                      "if (adminToken) {",
+                      "    pm.request.headers.add({",
+                      "        key: 'Authorization',",
+                      "        value: adminToken",
+                      "    });",
+                      "}",
+                      "console.log('Using token: ' + adminToken);",
+                      ""
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"court_name\": \"Lapangan Basket A Updated\",\n  \"court_category\": \"basket\",\n  \"description\": \"Lapangan basket indoor dengan fasilitas lengkap dan baru\",\n  \"status\": \"available\"\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:6543/admin/courts/1",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "6543",
+                  "path": ["admin", "courts", "1"]
+                },
+                "description": "Memperbarui court (hanya admin)"
+              },
+              "response": []
+            },
+            {
+              "name": "Delete Court",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      "// Gunakan token admin jika tersedia",
+                      "var adminToken = pm.environment.get('adminToken');",
+                      "if (adminToken) {",
+                      "    pm.request.headers.add({",
+                      "        key: 'Authorization',",
+                      "        value: adminToken",
+                      "    });",
+                      "}",
+                      "console.log('Using token: ' + adminToken);",
+                      ""
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:6543/admin/courts/1",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "6543",
+                  "path": ["admin", "courts", "1"]
+                },
+                "description": "Menghapus court (hanya admin)"
+              },
+              "response": []
+            },
+            {
+              "name": "Upload Court Image",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      "// Gunakan token admin jika tersedia",
+                      "var adminToken = pm.environment.get('adminToken');",
+                      "if (adminToken) {",
+                      "    pm.request.headers.add({",
+                      "        key: 'Authorization',",
+                      "        value: adminToken",
+                      "    });",
+                      "}",
+                      "console.log('Using token: ' + adminToken);",
+                      ""
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "image",
+                      "type": "file",
+                      "src": ""
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "http://localhost:6543/admin/courts/1/upload-image",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "6543",
+                  "path": ["admin", "courts", "1", "upload-image"]
+                },
+                "description": "Upload gambar untuk court (hanya admin)"
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Bookings",
+          "description": "Endpoint admin untuk manajemen booking",
+          "item": [
+            {
+              "name": "Get All Bookings",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      "// Gunakan token admin jika tersedia",
+                      "var adminToken = pm.environment.get('adminToken');",
+                      "if (adminToken) {",
+                      "    pm.request.headers.add({",
+                      "        key: 'Authorization',",
+                      "        value: adminToken",
+                      "    });",
+                      "}"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:6543/admin/bookings",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "6543",
+                  "path": ["admin", "bookings"]
+                },
+                "description": "Mendapatkan semua booking (hanya admin)"
+              },
+              "response": []
+            },
+            {
+              "name": "Get Booking Detail",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      "// Gunakan token admin jika tersedia",
+                      "var adminToken = pm.environment.get('adminToken');",
+                      "if (adminToken) {",
+                      "    pm.request.headers.add({",
+                      "        key: 'Authorization',",
+                      "        value: adminToken",
+                      "    });",
+                      "}"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:6543/admin/bookings/1",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "6543",
+                  "path": ["admin", "bookings", "1"]
+                },
+                "description": "Mendapatkan detail booking berdasarkan ID (hanya admin)"
+              },
+              "response": []
+            },
+            {
+              "name": "Update Booking",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      "// Gunakan token admin jika tersedia",
+                      "var adminToken = pm.environment.get('adminToken');",
+                      "if (adminToken) {",
+                      "    pm.request.headers.add({",
+                      "        key: 'Authorization',",
+                      "        value: adminToken",
+                      "    });",
+                      "}"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"time\": \"2025-06-15T16:00:00\",\n  \"full_name\": \"Updated Name\",\n  \"phone_number\": \"08987654321\",\n  \"status\": \"confirmed\"\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:6543/admin/bookings/1",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "6543",
+                  "path": ["admin", "bookings", "1"]
+                },
+                "description": "Memperbarui booking (hanya admin)"
+              },
+              "response": []
+            },
+            {
+              "name": "Delete Booking",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      "// Gunakan token admin jika tersedia",
+                      "var adminToken = pm.environment.get('adminToken');",
+                      "if (adminToken) {",
+                      "    pm.request.headers.add({",
+                      "        key: 'Authorization',",
+                      "        value: adminToken",
+                      "    });",
+                      "}"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:6543/admin/bookings/1",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "6543",
+                  "path": ["admin", "bookings", "1"]
+                },
+                "description": "Menghapus booking (hanya admin)"
+              },
+              "response": []
+            },
+            {
+              "name": "Update Booking Status",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      "// Gunakan token admin jika tersedia",
+                      "var adminToken = pm.environment.get('adminToken');",
+                      "if (adminToken) {",
+                      "    pm.request.headers.add({",
+                      "        key: 'Authorization',",
+                      "        value: adminToken",
+                      "    });",
+                      "}"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"status\": \"confirmed\"\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:6543/admin/bookings/1/status",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "6543",
+                  "path": ["admin", "bookings", "1", "status"]
+                },
+                "description": "Memperbarui status booking (hanya admin)"
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,563 @@
+{
+  "info": {
+    "name": "Lapangan Backend API",
+    "description": "API untuk sistem manajemen lapangan olahraga",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Admin",
+      "description": "Endpoint khusus untuk admin",
+      "item": [
+        {
+          "name": "Get All Bookings",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:6543/admin/bookings",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "6543",
+              "path": ["admin", "bookings"]
+            },
+            "description": "Mendapatkan semua booking (hanya admin)"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Booking Detail",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:6543/admin/bookings/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "6543",
+              "path": ["admin", "bookings", "1"]
+            },
+            "description": "Mendapatkan detail booking berdasarkan ID (hanya admin)"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Booking",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"time\": \"2025-06-15T16:00:00\",\n  \"full_name\": \"Updated Name\",\n  \"phone_number\": \"08987654321\",\n  \"status\": \"confirmed\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:6543/admin/bookings/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "6543",
+              "path": ["admin", "bookings", "1"]
+            },
+            "description": "Memperbarui booking (hanya admin)"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Booking",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:6543/admin/bookings/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "6543",
+              "path": ["admin", "bookings", "1"]
+            },
+            "description": "Menghapus booking (hanya admin)"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Booking Status",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"confirmed\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:6543/admin/bookings/1/status",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "6543",
+              "path": ["admin", "bookings", "1", "status"]
+            },
+            "description": "Memperbarui status booking (hanya admin)"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Authentication",
+      "description": "Endpoint untuk autentikasi pengguna",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"full_name\": \"John Doe\",\n  \"email\": \"john@example.com\",\n  \"password\": \"Password123\",\n  \"role\": \"user\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:6543/auth/register",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "6543",
+              "path": ["auth", "register"]
+            },
+            "description": "Mendaftarkan pengguna baru"
+          },
+          "response": []
+        },
+        {
+          "name": "Register Admin",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"full_name\": \"Admin User\",\n  \"email\": \"admin@example.com\",\n  \"password\": \"AdminPass123\",\n  \"role\": \"admin\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:6543/auth/register",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "6543",
+              "path": ["auth", "register"]
+            },
+            "description": "Mendaftarkan pengguna admin"
+          },
+          "response": []
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"john@example.com\",\n  \"password\": \"Password123\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:6543/auth/login",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "6543",
+              "path": ["auth", "login"]
+            },
+            "description": "Login pengguna"
+          },
+          "response": []
+        },
+        {
+          "name": "Login Admin",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@example.com\",\n  \"password\": \"AdminPass123\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:6543/auth/login",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "6543",
+              "path": ["auth", "login"]
+            },
+            "description": "Login sebagai admin"
+          },
+          "response": []
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:6543/auth/logout",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "6543",
+              "path": ["auth", "logout"]
+            },
+            "description": "Logout pengguna"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Users",
+      "description": "Endpoint untuk manajemen pengguna",
+      "item": [
+        {
+          "name": "Get All Users",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:6543/users",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "6543",
+              "path": ["users"]
+            },
+            "description": "Mendapatkan semua pengguna"
+          },
+          "response": []
+        },
+        {
+          "name": "Create User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"full_name\": \"Jane Smith\",\n  \"email\": \"jane@example.com\",\n  \"password\": \"Password123\",\n  \"role\": \"user\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:6543/users",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "6543",
+              "path": ["users"]
+            },
+            "description": "Membuat pengguna baru"
+          },
+          "response": []
+        },
+        {
+          "name": "Get User by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:6543/users/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "6543",
+              "path": ["users", "1"]
+            },
+            "description": "Mendapatkan pengguna berdasarkan ID"
+          },
+          "response": []
+        },
+        {
+          "name": "Update User",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"full_name\": \"Jane Smith Updated\",\n  \"email\": \"jane.updated@example.com\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:6543/users/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "6543",
+              "path": ["users", "1"]
+            },
+            "description": "Memperbarui pengguna"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete User",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:6543/users/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "6543",
+              "path": ["users", "1"]
+            },
+            "description": "Menghapus pengguna"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Courts",
+      "description": "Endpoint untuk manajemen lapangan",
+      "item": [
+        {
+          "name": "Get All Courts",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:6543/courts",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "6543",
+              "path": ["courts"]
+            },
+            "description": "Mendapatkan semua lapangan"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Court",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"court_name\": \"Lapangan Basket A\",\n  \"court_category\": \"basket\",\n  \"description\": \"Lapangan basket indoor dengan fasilitas lengkap\",\n  \"status\": \"available\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:6543/courts",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "6543",
+              "path": ["courts"]
+            },
+            "description": "Membuat lapangan baru"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Court by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:6543/courts/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "6543",
+              "path": ["courts", "1"]
+            },
+            "description": "Mendapatkan lapangan berdasarkan ID"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Court",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"court_name\": \"Lapangan Basket A Updated\",\n  \"description\": \"Lapangan basket indoor dengan fasilitas lengkap dan baru\",\n  \"status\": \"maintenance\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:6543/courts/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "6543",
+              "path": ["courts", "1"]
+            },
+            "description": "Memperbarui lapangan"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Court",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:6543/courts/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "6543",
+              "path": ["courts", "1"]
+            },
+            "description": "Menghapus lapangan"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Bookings",
+      "description": "Endpoint untuk manajemen pemesanan lapangan",
+      "item": [
+        {
+          "name": "Get User Bookings",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:6543/bookings/users/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "6543",
+              "path": ["bookings", "users", "1"]
+            },
+            "description": "Mendapatkan semua pemesanan dari pengguna tertentu"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Booking",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"court_id\": 1,\n  \"time\": \"2025-06-15T14:00:00\",\n  \"full_name\": \"John Doe\",\n  \"phone_number\": \"08123456789\",\n  \"status\": \"pending\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:6543/bookings/users/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "6543",
+              "path": ["bookings", "users", "1"]
+            },
+            "description": "Membuat pemesanan baru"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Booking Detail",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:6543/bookings/1/users/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "6543",
+              "path": ["bookings", "1", "users", "1"]
+            },
+            "description": "Mendapatkan detail pemesanan"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Booking",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"time\": \"2025-06-15T16:00:00\",\n  \"status\": \"confirmed\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:6543/bookings/1/users/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "6543",
+              "path": ["bookings", "1", "users", "1"]
+            },
+            "description": "Memperbarui pemesanan"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Booking",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:6543/bookings/1/users/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "6543",
+              "path": ["bookings", "1", "users", "1"]
+            },
+            "description": "Menghapus pemesanan"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Court Bookings",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:6543/bookings/courts/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "6543",
+              "path": ["bookings", "courts", "1"]
+            },
+            "description": "Mendapatkan semua pemesanan untuk lapangan tertentu"
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

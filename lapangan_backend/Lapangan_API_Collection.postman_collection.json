@@ -1,0 +1,629 @@
+{
+	"info": {
+		"_postman_id": "f8a5e4d2-6b7c-4a9e-b3c8-1a2b3c4d5e6f",
+		"name": "Lapangan API Collection",
+		"description": "Collection untuk API sistem penyewaan lapangan dengan role-based access control",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Register User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"full_name\": \"User Test\",\n    \"email\": \"user@example.com\",\n    \"password\": \"Password123\",\n    \"role\": \"user\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:6543/auth/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "6543",
+							"path": [
+								"auth",
+								"register"
+							]
+						},
+						"description": "Mendaftarkan pengguna baru dengan role 'user'"
+					},
+					"response": []
+				},
+				{
+					"name": "Register Admin",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"full_name\": \"Admin Test\",\n    \"email\": \"admin@example.com\",\n    \"password\": \"Admin123\",\n    \"role\": \"admin\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:6543/auth/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "6543",
+							"path": [
+								"auth",
+								"register"
+							]
+						},
+						"description": "Mendaftarkan pengguna baru dengan role 'admin'"
+					},
+					"response": []
+				},
+				{
+					"name": "Login User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"user@example.com\",\n    \"password\": \"Password123\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:6543/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "6543",
+							"path": [
+								"auth",
+								"login"
+							]
+						},
+						"description": "Login sebagai user biasa"
+					},
+					"response": []
+				},
+				{
+					"name": "Login Admin",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"admin@example.com\",\n    \"password\": \"Admin123\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:6543/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "6543",
+							"path": [
+								"auth",
+								"login"
+							]
+						},
+						"description": "Login sebagai admin"
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:6543/auth/logout",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "6543",
+							"path": [
+								"auth",
+								"logout"
+							]
+						},
+						"description": "Logout dari sistem"
+					},
+					"response": []
+				}
+			],
+			"description": "Endpoint untuk autentikasi pengguna"
+		},
+		{
+			"name": "User - Court",
+			"item": [
+				{
+					"name": "Get All Courts",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:6543/courts",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "6543",
+							"path": [
+								"courts"
+							]
+						},
+						"description": "Mendapatkan daftar semua lapangan"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Court Detail",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:6543/courts/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "6543",
+							"path": [
+								"courts",
+								"1"
+							]
+						},
+						"description": "Mendapatkan detail lapangan berdasarkan ID"
+					},
+					"response": []
+				}
+			],
+			"description": "Endpoint untuk pengguna biasa melihat lapangan"
+		},
+		{
+			"name": "User - Booking",
+			"item": [
+				{
+					"name": "Get User Bookings",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:6543/bookings/users/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "6543",
+							"path": [
+								"bookings",
+								"users",
+								"1"
+							]
+						},
+						"description": "Mendapatkan daftar booking milik user tertentu"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Booking",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"court_id\": 1,\n    \"time\": \"2025-06-15T14:00:00\",\n    \"full_name\": \"User Test\",\n    \"phone_number\": \"081234567890\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:6543/bookings/users/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "6543",
+							"path": [
+								"bookings",
+								"users",
+								"1"
+							]
+						},
+						"description": "Membuat booking baru untuk user tertentu"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Booking Detail",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:6543/bookings/1/users/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "6543",
+							"path": [
+								"bookings",
+								"1",
+								"users",
+								"1"
+							]
+						},
+						"description": "Mendapatkan detail booking tertentu milik user tertentu"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Booking",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"court_id\": 1,\n    \"time\": \"2025-06-15T16:00:00\",\n    \"full_name\": \"User Test Updated\",\n    \"phone_number\": \"081234567891\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:6543/bookings/1/users/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "6543",
+							"path": [
+								"bookings",
+								"1",
+								"users",
+								"1"
+							]
+						},
+						"description": "Mengubah booking tertentu milik user tertentu"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Booking",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:6543/bookings/1/users/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "6543",
+							"path": [
+								"bookings",
+								"1",
+								"users",
+								"1"
+							]
+						},
+						"description": "Menghapus booking tertentu milik user tertentu"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Court Bookings",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:6543/bookings/courts/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "6543",
+							"path": [
+								"bookings",
+								"courts",
+								"1"
+							]
+						},
+						"description": "Mendapatkan daftar booking untuk lapangan tertentu"
+					},
+					"response": []
+				}
+			],
+			"description": "Endpoint untuk pengguna biasa mengelola booking"
+		},
+		{
+			"name": "Admin - Booking",
+			"item": [
+				{
+					"name": "Get All Bookings",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:6543/admin/bookings",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "6543",
+							"path": [
+								"admin",
+								"bookings"
+							]
+						},
+						"description": "Admin mendapatkan daftar semua booking"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Booking Detail",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:6543/admin/bookings/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "6543",
+							"path": [
+								"admin",
+								"bookings",
+								"1"
+							]
+						},
+						"description": "Admin mendapatkan detail booking tertentu"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Booking",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"court_id\": 1,\n    \"time\": \"2025-06-15T16:00:00\",\n    \"full_name\": \"User Test Updated by Admin\",\n    \"phone_number\": \"081234567891\",\n    \"status\": \"confirmed\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:6543/admin/bookings/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "6543",
+							"path": [
+								"admin",
+								"bookings",
+								"1"
+							]
+						},
+						"description": "Admin mengubah booking tertentu"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Booking Status",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"status\": \"confirmed\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:6543/admin/bookings/1/status",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "6543",
+							"path": [
+								"admin",
+								"bookings",
+								"1",
+								"status"
+							]
+						},
+						"description": "Admin mengubah status booking tertentu"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Booking",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:6543/admin/bookings/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "6543",
+							"path": [
+								"admin",
+								"bookings",
+								"1"
+							]
+						},
+						"description": "Admin menghapus booking tertentu"
+					},
+					"response": []
+				}
+			],
+			"description": "Endpoint untuk admin mengelola booking"
+		},
+		{
+			"name": "Admin - Court",
+			"item": [
+				{
+					"name": "Get All Courts",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:6543/admin/courts",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "6543",
+							"path": [
+								"admin",
+								"courts"
+							]
+						},
+						"description": "Admin mendapatkan daftar semua lapangan"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Court",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"court_name\": \"Lapangan Basket A\",\n    \"court_category\": \"Basket\",\n    \"description\": \"Lapangan basket indoor dengan lantai kayu\",\n    \"status\": \"available\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:6543/admin/courts",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "6543",
+							"path": [
+								"admin",
+								"courts"
+							]
+						},
+						"description": "Admin membuat lapangan baru"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Court Detail",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:6543/admin/courts/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "6543",
+							"path": [
+								"admin",
+								"courts",
+								"1"
+							]
+						},
+						"description": "Admin mendapatkan detail lapangan tertentu"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Court",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"court_name\": \"Lapangan Basket A Updated\",\n    \"court_category\": \"Basket\",\n    \"description\": \"Lapangan basket indoor dengan lantai kayu yang telah direnovasi\",\n    \"status\": \"maintenance\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:6543/admin/courts/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "6543",
+							"path": [
+								"admin",
+								"courts",
+								"1"
+							]
+						},
+						"description": "Admin mengubah lapangan tertentu"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Court",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:6543/admin/courts/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "6543",
+							"path": [
+								"admin",
+								"courts",
+								"1"
+							]
+						},
+						"description": "Admin menghapus lapangan tertentu"
+					},
+					"response": []
+				}
+			],
+			"description": "Endpoint untuk admin mengelola lapangan"
+		}
+	]
+}
