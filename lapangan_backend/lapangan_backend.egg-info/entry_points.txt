@@ -1,0 +1,5 @@
+[console_scripts]
+initialize_lapangan_backend_db = lapangan_backend.scripts.initialize_db:main
+
+[paste.app_factory]
+main = lapangan_backend:main
